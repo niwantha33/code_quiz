@@ -109,7 +109,7 @@ export const get_questions = function () {
 
     type_of_questions.forEach(
          (value, index)=>{
-            questions.set((index+1), value)
+            questions.set((index), value)
         }
     )
         
