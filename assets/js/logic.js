@@ -1,6 +1,20 @@
 import { get_questions } from "../js/questions.js";
+
 const start_quiz = function () {
 
+    try {
+        // get the Map array 
+        let num_of_qns = get_questions().size;
+        console.log(num_of_qns)
+        
+
+    } catch (e) {
+
+        throw {
+            error_locations: "start_quiz function",
+            message: e
+        }
+    }
 }
 
 
@@ -19,8 +33,8 @@ const start_screen = function (callback) {
 
         } catch (e) {
             throw {
-                Error: e,
-                message: "querySelector id Error: " + start
+                error_location: "start_screen function",
+                message: "querySelector id Error: " + start + " " + e
             };
         }
 
