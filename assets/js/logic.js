@@ -11,7 +11,7 @@ const start_screen = function (callback) {
     const start = document.querySelector("#start-screen")  
     start_btn.addEventListener('click', function () {
         
-        if (start.isConnected()) {
+        if (start.isConnected) {
             start.setAttribute('class', 'hide');
             callback();
 
