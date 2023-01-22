@@ -1,5 +1,5 @@
 //  set all questions 
-export const get_questions = function () {
+const create_question_array = function () {
     //  set keys(name) values, also safe to export to another module 
     let questions = new Map();
     // all type of questions 
@@ -108,16 +108,15 @@ export const get_questions = function () {
     ));
 
     type_of_questions.forEach(
-        (value, index) => {
-            questions.set((index), value)
+         (value, index)=>{
+            questions.set((index+1), value)
         }
-    );
+    )
 
-    return questions;
+    return questions
 }
 
 
-
-
-
-
+export const get_questions = function () {
+    return lift_of_questions(type_of_questions);
+}
