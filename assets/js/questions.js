@@ -5,92 +5,112 @@ export const get_questions = function () {
     // all type of questions 
     let question_1 = {
         qn: "a",
-        ans_1: "b",
-        ans_2: "c",
-        ans_3: "d",
-        ans_4: "e",
-        correct_ans: function () { return this.ans_1 }
+        choices:[
+            'b',
+            'c',
+            'd',
+            'e'
+        ],
+        ans: function () { return this.choices[2] }
     };
 
     let question_2 = {
         qn: "a",
-        ans_1: "b",
-        ans_2: "c",
-        ans_3: "d",
-        ans_4: "e",
-        correct_ans: function () { return this.ans_3 }
+        choices:[
+            'b',
+            'c',
+            'd',
+            'e'
+        ],
+        ans: function () { return this.choices[2] }
     };
 
     let question_3 = {
         qn: "a",
-        ans_1: "b",
-        ans_2: "c",
-        ans_3: "d",
-        ans_4: "e",
-        correct_ans: function () { return this.ans_3 }
+        choices:[
+            'b',
+            'c',
+            'd',
+            'e'
+        ],
+        ans: function () { return this.choices[2] }
     };
 
     let question_4 = {
         qn: "a",
-        ans_1: "b",
-        ans_2: "c",
-        ans_3: "d",
-        ans_4: "e",
-        correct_ans: function () { return this.ans_3 }
+        choices:[
+            'b',
+            'c',
+            'd',
+            'e'
+        ],
+        ans: function () { return this.choices[2] }
     };
 
     let question_5 = {
         qn: "a",
-        ans_1: "b",
-        ans_2: "c",
-        ans_3: "d",
-        ans_4: "e",
-        correct_ans: function () { return this.ans_3 }
+        choices:[
+            'b',
+            'c',
+            'd',
+            'e'
+        ],
+        ans: function () { return this.choices[2] }
     };
 
     let question_6 = {
         qn: "a",
-        ans_1: "b",
-        ans_2: "c",
-        ans_3: "d",
-        ans_4: "e",
-        correct_ans: function () { return this.ans_3 }
+        choices:[
+            'b',
+            'c',
+            'd',
+            'e'
+        ],
+        ans: function () { return this.choices[2] }
     };
 
     let question_7 = {
         qn: "a",
-        ans_1: "b",
-        ans_2: "c",
-        ans_3: "d",
-        ans_4: "e",
-        correct_ans: function () { return this.ans_3 }
+        choices:[
+            'b',
+            'c',
+            'd',
+            'e'
+        ],
+        ans: function () { return this.choices[2] }
     };
 
     let question_8 = {
         qn: "a",
-        ans_1: "b",
-        ans_2: "c",
-        ans_3: "d",
-        ans_4: "e",
-        correct_ans: function () { return this.ans_3 }
+        choices:[
+            'b',
+            'c',
+            'd',
+            'e'
+        ],
+        ans: function () { return this.choices[2] }
     };
 
     let question_9 = {
         qn: "a",
-        ans_1: "b",
-        ans_2: "c",
-        ans_3: "d",
-        ans_4: "e",
-        correct_ans: function () { return this.ans_3 }
+        choices:[
+            'b',
+            'c',
+            'd',
+            'e'
+        ],
+        ans: function () { return this.choices[2] }
     };
 
     let question_10 = {
         qn: "a",
-        ans_1: "b",
-        ans_2: "c",
-        ans_3: "d",
-        ans_4: "e",
-        correct_ans: function () { return this.ans_3 }
+        choices:[
+            'b',
+            'c',
+            'd',
+            'e'
+        ],
+        ans: function () { return this.choices[2] }
     };
 
     // create Array objects using Array class to store question data 
@@ -109,7 +129,7 @@ export const get_questions = function () {
 
     type_of_questions.forEach(
          (value, index)=>{
-            questions.set((index), value)
+            questions.set(index, value)
         }
     )
         
