@@ -8,18 +8,20 @@ const start_screen = function (callback) {
     // "start Quiz" button - bind to click event
     const start_btn = document.querySelector('#start')
     // call hide class to hide the start screen
-    const start = document.querySelector("#start-screen")  
+    const start = document.querySelector("#start-screen")
+
     start_btn.addEventListener('click', function () {
-        
-        if (start.isConnected) {
+        //  check start id  is inside the document, if error throw error!
+        try {
             start.setAttribute('class', 'hide');
+            //  callback function for start_quiz
             callback();
 
-        }else{
-            throw{
-                name:"start binding Error!",
-                message:start.isConnected()
-            }
+        } catch (e) {
+            throw {
+                Error: e,
+                message: "querySelector id Error: " + start
+            };
         }
 
     }, true)
