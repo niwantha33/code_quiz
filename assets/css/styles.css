@@ -87,3 +87,17 @@ li:nth-child(odd) {
   top: 10px;
   right: 10px;
 }
+
+table{
+  border: 1px solid black;
+  table-layout: fixed;
+  max-width: 600px;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid black;
+  overflow: auto;
+  max-width: 300px;
+  width: 100%;
+}
