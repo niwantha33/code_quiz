@@ -44,7 +44,7 @@ export const get_questions = function () {
             '<img href="image.jpg">',
             '<image src="image.jpg">'
         ],
-        ans: 'b<img src="image.jpg">'
+        ans: '<img src="image.jpg">'
     };
 
     let question_5 = {

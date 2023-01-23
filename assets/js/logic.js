@@ -1,64 +1,48 @@
 import { get_questions } from "../js/questions.js";
 
 // global variables 
-
+var score = 0;
 let timeCnt = 150
 let cnt = 0;
 let set_time_id = undefined
-let remain_qn = 10
+let numOfQuiz = get_questions().size;
 
 const timer = document.querySelector("#time")
 let title = document.querySelector("#question-title")
 let choices = document.querySelector("#choices")
-let ulEl = document.createElement('ul')
+let olEl = document.createElement('ol')
 const qn_show = document.querySelector("#questions")
 
 let btn_array = new Array(4)
 
-for (let i = 0; i < btn_array.length; i++) {
-    btn_array[i] = document.createElement('button')
-    // btn_array[i].id =i
-    // btn_array[i].cla = i
-    console.log(btn_array[i])
+// create 4 buttons 
+for (let i = 0; i < 4; i++) {
+
+    btn_array[i] = document.createElement('button');
 }
-
-console.log(btn_array)
-// let btn = document.createElement('button') 
-
-let quiz = Array.from(get_questions())
 
 const end_quiz = function () {
     qn_show.setAttribute('class', 'hide')
     document.querySelector('#end-screen').removeAttribute('class', 'hide')
-    console.log("end quiz")
-
 }
-
 
 const get_quiz = function () {
 
-    if (cnt < 10) {
+    if (cnt < numOfQuiz) {
+
         console.log(get_questions().get(cnt))
+
         title.textContent = get_questions().get(cnt).qn
+
         let choices = get_questions().get(cnt).choices
 
         choices.forEach((k, v) => {
-            console.log(v, k)
-            btn_array[v].setAttribute('style', 'color:white')
-            btn_array[v].textContent = k
-
-            // btn_array[v].localName = v
-
+            btn_array[v].setAttribute('style', 'color:#f3edfc');
+            btn_array[v].textContent = (k);
         })
-    }else{
-
+    } else {
         end_quiz();
-
     }
-    console.log("cnt :", cnt)
-    // cnt++;
-    
-
 
 }
 
@@ -68,7 +52,7 @@ const track_timer = function () {
     timer.textContent = timeCnt;
 
     if (timeCnt % 15 === 0) {
-        if (cnt < 10 && cnt > -1) {
+        if (cnt < numOfQuiz && cnt > -1) {
             get_quiz();
         }
     }
@@ -77,31 +61,27 @@ const track_timer = function () {
         clearInterval(set_time_id)
         timer.textContent = 0;
     }
-
     timeCnt--;
-
 }
 
 const start_quiz = function () {
-
+    
     try {
         // remove css hide class from the #question id 
-        
         qn_show.removeAttribute('class', 'hide')
         // create elements 
+        choices.appendChild(olEl)
 
-        choices.appendChild(ulEl)
-        ulEl.append(document.createElement('ol'))
-        ulEl.append(document.createElement('ol'))
-        ulEl.append(document.createElement('ol'))
-        ulEl.append(document.createElement('ol'))
+        for (let j = 0; j < 4; j++) {
+            //  create list item 
+            olEl.append(document.createElement('li'))
+        }
 
-        ulEl.childNodes.forEach((liEl, v) => {
-
-            liEl.appendChild(btn_array[v])
+        olEl.childNodes.forEach((liEl, v) => {
+            // 
+            liEl.appendChild(btn_array[v]);
         })
         set_time_id = setInterval(track_timer, 1000);
-
 
     } catch (e) {
 
@@ -116,6 +96,7 @@ const start_quiz = function () {
 const start_screen = function (callback) {
     // "start Quiz" button - bind to click event
     const start_btn = document.querySelector('#start')
+
     // call hide class to hide the start screen
     const start = document.querySelector("#start-screen")
 
@@ -126,10 +107,12 @@ const start_screen = function (callback) {
     }
     start_btn.addEventListener('click', function (e) {
         e.preventDefault();
-        e.stopPropagation()
+
         //  check start id  is inside the document, if error throw error!
         try {
+            // hide the start screen
             start.setAttribute('class', 'hide');
+
             //  callback function for start_quiz
             callback();
 
@@ -139,37 +122,32 @@ const start_screen = function (callback) {
                 message: e
             };
         }
-        
+
 
     }, true)
 }
 
+olEl.addEventListener('click', function (e) {
 
-start_screen(start_quiz)
+    e.stopPropagation();
 
-ulEl.addEventListener('click', function (e) {
-    console.log(e)
-    if (cnt <10)
-    {
-        // e.target.removeAttribute('style', 'color:red')  
+    if (cnt < numOfQuiz) {
+        if (e.target.textContent === get_questions().get(cnt).ans) {
+            e.target.setAttribute('style', 'color:gold; font-size: 600;')
+            e.target.textContent = "correct"
+            score++;
 
-        console.log(get_questions().get(cnt).ans)
-        console.log(e.target.textContent)
-    if (e.target.textContent === get_questions().get(cnt).ans) {
-        e.target.setAttribute('style', 'color:gold')
-        e.target.textContent = "correct"
+        } else {
+            e.target.textContent = 'X';
+            e.target.setAttribute('style', 'color:red')
 
-    } else {
-        e.target.textContent = 'X' ;
-        e.target.setAttribute('style', 'color:red')
-        // timeCnt -= 15
+        }
+        // wait until user see the answer 
+        setTimeout(get_quiz, 500)
     }
-    setTimeout(get_quiz, 500)   
-
-    }
+    //  get next quiz
     cnt++;
-    
-   
+
 }, true)
 
-
+start_screen(start_quiz)
