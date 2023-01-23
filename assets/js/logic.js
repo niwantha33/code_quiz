@@ -63,18 +63,18 @@ const get_quiz = function () {
 
 }
 
-const track_timer = function () {
+const quiz_timer_update = function () {
 
     // update the current time
     timer.textContent = timeCnt;   
     if (timeCnt== 150) {
         if (cnt < numOfQuiz && cnt > -1) {
+            // start the first quiz
             get_quiz();           
         }
-    } else if (timeCnt <= 0) {
-            end_quiz()
-            
-            // timer.textContent = 0;
+    } else if (timeCnt <= 0) { // if time reaches to 0
+            end_quiz()            
+           
         }
     timeCnt--;
 }
@@ -84,8 +84,8 @@ const start_quiz = function () {
     try {
         // remove css hide class from the #question id 
         qn_show.removeAttribute('class', 'hide')
-
-        set_time_id = setInterval(track_timer, 1000);
+        // run quiz_timer_update function every 1 sec , until timer === 0 
+        set_time_id = setInterval(quiz_timer_update, 1000);
 
     } catch (e) {
 
@@ -151,7 +151,7 @@ olEl.addEventListener('click', function (e) {
         //  get next quiz
         cnt++;
         // wait until user see the answer 
-        setTimeout(get_quiz, 500)
+        setTimeout(get_quiz, 400)
     }
 
 

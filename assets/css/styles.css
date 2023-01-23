@@ -31,7 +31,7 @@ button:hover {
 }
 
 .choices button {
-  display: block;
+  /* display: block; */
 }
 
 input[type="text"] {
@@ -42,6 +42,7 @@ ol {
   padding-left: 0px;
   max-height: 400px;
   overflow: auto;
+  
 }
 
 li {
@@ -50,7 +51,7 @@ li {
 }
 
 li:nth-child(odd) {
-  background-color: #f3edfc;
+  /* background-color: #f3edfc; */
 }
 
 .wrapper {
