@@ -131,10 +131,11 @@ const start_screen = function (callback) {
 }
 
 olEl.addEventListener('click', function (e) {
-
+    // stop this event further. 
     e.stopPropagation();
 
     if (cnt < numOfQuiz) {
+        // get the current target button and set attributes 
         if (e.target.textContent === get_questions().get(cnt).ans) {
             e.target.setAttribute('style', 'color:gold; font-size: 600;')
             e.target.textContent = "correct"
