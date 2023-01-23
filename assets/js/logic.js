@@ -21,25 +21,42 @@ for (let i = 0; i < 4; i++) {
     btn_array[i] = document.createElement('button');
 }
 
+const store_score = function () {
+
+}
+
 const end_quiz = function () {
+    clearInterval(set_time_id)
     qn_show.setAttribute('class', 'hide')
     document.querySelector('#end-screen').removeAttribute('class', 'hide')
+    let show_score = document.getElementById('final-score');
+    show_score.textContent = score   
 }
 
 const get_quiz = function () {
-
+    // debugger;
     if (cnt < numOfQuiz) {
 
-        console.log(get_questions().get(cnt))
+        while (olEl.hasChildNodes()) {
+
+            olEl.removeChild(olEl.children[0]);
+        }
 
         title.textContent = get_questions().get(cnt).qn
 
-        let choices = get_questions().get(cnt).choices
+        let choices_ = get_questions().get(cnt).choices
 
-        choices.forEach((k, v) => {
-            btn_array[v].setAttribute('style', 'color:#f3edfc');
-            btn_array[v].textContent = (k);
+
+        choices_.forEach((value, index) => {
+            let liEl = document.createElement('li')
+            btn_array[index].setAttribute('style', 'color:#f3edfc');
+            btn_array[index].textContent = (value);
+            liEl.appendChild(btn_array[index]);
+            olEl.appendChild(liEl)
+
         })
+        choices.appendChild(olEl)
+
     } else {
         end_quiz();
     }
@@ -49,38 +66,25 @@ const get_quiz = function () {
 const track_timer = function () {
 
     // update the current time
-    timer.textContent = timeCnt;
-
-    if (timeCnt % 15 === 0) {
+    timer.textContent = timeCnt;   
+    if (timeCnt== 150) {
         if (cnt < numOfQuiz && cnt > -1) {
-            get_quiz();
+            get_quiz();           
         }
-    }
-    if (timeCnt <= 0) {
-        end_quiz()
-        clearInterval(set_time_id)
-        timer.textContent = 0;
-    }
+    } else if (timeCnt <= 0) {
+            end_quiz()
+            
+            // timer.textContent = 0;
+        }
     timeCnt--;
 }
 
 const start_quiz = function () {
-    
+
     try {
         // remove css hide class from the #question id 
         qn_show.removeAttribute('class', 'hide')
-        // create elements 
-        choices.appendChild(olEl)
 
-        for (let j = 0; j < 4; j++) {
-            //  create list item 
-            olEl.append(document.createElement('li'))
-        }
-
-        olEl.childNodes.forEach((liEl, v) => {
-            // 
-            liEl.appendChild(btn_array[v]);
-        })
         set_time_id = setInterval(track_timer, 1000);
 
     } catch (e) {
@@ -91,7 +95,6 @@ const start_quiz = function () {
         }
     }
 }
-
 
 const start_screen = function (callback) {
     // "start Quiz" button - bind to click event
@@ -139,14 +142,19 @@ olEl.addEventListener('click', function (e) {
 
         } else {
             e.target.textContent = 'X';
-            e.target.setAttribute('style', 'color:red')
+            e.target.setAttribute('style', 'color:red');
 
+            // incorrect answers will penalize your score/time by ten seconds
+            timeCnt -= 10;
         }
+
+        //  get next quiz
+        cnt++;
         // wait until user see the answer 
         setTimeout(get_quiz, 500)
     }
-    //  get next quiz
-    cnt++;
+
+
 
 }, true)
 
