@@ -5,66 +5,60 @@ import { get_questions } from "../js/questions.js";
 let timeCnt = 150
 let cnt = 0;
 let set_time_id = undefined
+let remain_qn = 10
+
 const timer = document.querySelector("#time")
+let title = document.querySelector("#question-title")
+let choices = document.querySelector("#choices")
+let ulEl = document.createElement('ul')
+const qn_show = document.querySelector("#questions")
+
+let btn_array = new Array(4)
+
+for (let i = 0; i < btn_array.length; i++) {
+    btn_array[i] = document.createElement('button')
+    // btn_array[i].id =i
+    // btn_array[i].cla = i
+    console.log(btn_array[i])
+}
+
+console.log(btn_array)
+// let btn = document.createElement('button') 
+
+let quiz = Array.from(get_questions())
+
+const end_quiz = function () {
+    qn_show.setAttribute('class', 'hide')
+    document.querySelector('#end-screen').removeAttribute('class', 'hide')
+    console.log("end quiz")
+
+}
+
 
 const get_quiz = function () {
 
+    if (cnt < 10) {
+        console.log(get_questions().get(cnt))
+        title.textContent = get_questions().get(cnt).qn
+        let choices = get_questions().get(cnt).choices
 
+        choices.forEach((k, v) => {
+            console.log(v, k)
+            btn_array[v].setAttribute('style', 'color:white')
+            btn_array[v].textContent = k
 
-    // Create element 
+            // btn_array[v].localName = v
 
-    // let title = document.querySelector("#question-title")
+        })
+    }else{
 
-    // let choices = document.querySelector("#choices")
-    // //  
+        end_quiz();
 
+    }
+    console.log("cnt :", cnt)
+    // cnt++;
+    
 
-    // li_array = Array.from(get_questions())
-    // console.log(li_array)
-    // num_of_qns.forEach(function(i){
-    //     li_array[i] =   get_questions().get(1) 
-
-    // })
-
-    // print(li_array)
-    // Object.entries(get_questions().get(0)).forEach(([key,values])=>{
-
-    //     console.log(key,values)
-
-    // })
-
-
-    let ulEl = document.createElement('ul')
-
-    choices.append(ulEl)
-    let olEl = document.createElement('ol')
-    let btnEl = document.createElement('button')
-    btnEl.className = 'button'
-    btnEl.textContent = "button 01"
-    olEl.append(btnEl)
-    ulEl.append(olEl)
-
-
-
-
-    // for(let i = 0; i <num_of_qns; i++){
-    //     // get the objects 
-    //     let qn_details = get_questions().get(i)    
-
-    //     Object.entries(qn_details).forEach(([key,values])=>{
-    //         console.log()
-    //     })
-
-
-
-    // console.log(Object.entries(qn_details))
-    // console.log(qn_details[1])
-
-
-    // }
-
-}
-const end_quiz = function () {
 
 }
 
@@ -74,15 +68,14 @@ const track_timer = function () {
     timer.textContent = timeCnt;
 
     if (timeCnt % 15 === 0) {
-        get_quiz();
-        console.log(timeCnt, cnt++)
+        if (cnt < 10 && cnt > -1) {
+            get_quiz();
+        }
     }
-
-    if (timeCnt === 0) {
-
+    if (timeCnt <= 0) {
         end_quiz()
         clearInterval(set_time_id)
-
+        timer.textContent = 0;
     }
 
     timeCnt--;
@@ -93,9 +86,20 @@ const start_quiz = function () {
 
     try {
         // remove css hide class from the #question id 
-        const qn_show = document.querySelector("#questions")
+        
         qn_show.removeAttribute('class', 'hide')
+        // create elements 
 
+        choices.appendChild(ulEl)
+        ulEl.append(document.createElement('ol'))
+        ulEl.append(document.createElement('ol'))
+        ulEl.append(document.createElement('ol'))
+        ulEl.append(document.createElement('ol'))
+
+        ulEl.childNodes.forEach((liEl, v) => {
+
+            liEl.appendChild(btn_array[v])
+        })
         set_time_id = setInterval(track_timer, 1000);
 
 
@@ -132,13 +136,40 @@ const start_screen = function (callback) {
         } catch (e) {
             throw {
                 error_location: "start_screen function",
-                message: "querySelector id Error: =>" + e
+                message: e
             };
         }
+        
 
     }, true)
 }
 
 
 start_screen(start_quiz)
+
+ulEl.addEventListener('click', function (e) {
+    console.log(e)
+    if (cnt <10)
+    {
+        // e.target.removeAttribute('style', 'color:red')  
+
+        console.log(get_questions().get(cnt).ans)
+        console.log(e.target.textContent)
+    if (e.target.textContent === get_questions().get(cnt).ans) {
+        e.target.setAttribute('style', 'color:gold')
+        e.target.textContent = "correct"
+
+    } else {
+        e.target.textContent = 'X' ;
+        e.target.setAttribute('style', 'color:red')
+        // timeCnt -= 15
+    }
+    setTimeout(get_quiz, 500)   
+
+    }
+    cnt++;
+    
+   
+}, true)
+
 
