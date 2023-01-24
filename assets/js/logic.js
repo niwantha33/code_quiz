@@ -34,6 +34,7 @@ for (let i = 0; i < 4; i++) {
 
 // display results in feedback section
 const create_feedback_table = function () {
+
     console.log("create table")
     document.querySelector('#end-screen').setAttribute('class', 'hide')
 
@@ -101,9 +102,22 @@ const set_feedback = function () {
 
 
 }
+/*
+@brief: This code defines a function called store_score()
+        which is used to store a score in the browser's local storage. 
+        The function first selects a button with an id of "submit" and 
+        adds an event listener to it, so that when the button is clicked, 
+        the function inside the event listener is executed.
+
+@param: callbackFunction
+
+@return: N/A
 
 
-const store_score = function () {
+
+*/
+
+const store_score = function (callbackFunction) {
     
     let submit_btn = document.getElementById('submit');
 
@@ -113,21 +127,14 @@ const store_score = function () {
 
         let get_initials = document.getElementById('initials').value;
 
-        let score_obj = new Array();       
+        let score_obj = new Array(); // tmp buffer for storing local data   
 
         if (localStorage.hasOwnProperty('score')) {
-
             let old_data = JSON.parse(localStorage.score);
-
-            console.log(old_data)
-
+            
             old_data.forEach((value, index)=>{
-
                 console.log(value, index)
-
-                score_obj.push(value);  
-
-                        
+                score_obj.push(value);                      
 
             })           
         }
@@ -138,21 +145,45 @@ const store_score = function () {
         let new_record = JSON.stringify(score_obj);
         localStorage.setItem('score', new_record);
   
-        set_feedback();
+        callbackFunction();
 
     }, true)
 
 }
 
+
+/*
+@brief:     This end_quiz() to end a quiz and display the final score. 
+            The function first clears the interval set by the 
+            setInterval() function using the clearInterval() function, 
+            effectively stopping the repeat of the function.
+*/
+
+
 const end_quiz = function () {
-    clearInterval(set_time_id)
+
+    clearInterval(set_time_id) // terminate the repeat function 
+
     qn_show.setAttribute('class', 'hide')
+
     document.querySelector('#end-screen').removeAttribute('class', 'hide')
+
     let show_score = document.getElementById('final-score');
-    show_score.textContent = score
-    store_score()
+
+    show_score.textContent = score // Your final score is #id.
+
+
+    store_score(set_feedback)// param: callback function  
 }
 
+/*
+@brief:
+        This get_quiz() to display the next question of a quiz. 
+        The function first checks if the current count (cnt) 
+        is less than the total number of questions (numOfQuiz). 
+        If it is, it proceeds to remove the current question and its choices from the page.
+        
+*/
 const get_quiz = function () {
     // debugger;
     if (cnt < numOfQuiz) {
@@ -250,6 +281,8 @@ const start_screen = function (callback) {
     }, true)
 }
 
+
+// listen to buttons 
 olEl.addEventListener('click', function (e) {
     // stop this event further. 
     e.stopPropagation();
@@ -276,8 +309,8 @@ olEl.addEventListener('click', function (e) {
         setTimeout(get_quiz, 400)
     }
 
-
-
 }, true)
 
+
+// start the program 
 start_screen(start_quiz)
