@@ -11,6 +11,10 @@ some of the issues that I found during the coding;
 
 ![debug](./assets/images/debug.png)
 
+- solution found using "debugger" method 
+
+![solved](./assets/images/array_issues.png)
+
 ### credits
 [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
