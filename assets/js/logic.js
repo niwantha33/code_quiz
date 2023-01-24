@@ -31,6 +31,14 @@ for (let i = 0; i < 4; i++) {
     btn_array[i] = document.createElement('button');
 }
 
+// play audio files 
+
+let correct = new Audio()
+correct.src = '../assets/sfx/correct.wav'
+
+let incorrect = new Audio()
+incorrect.src = '../assets/sfx/incorrect.wav'
+
 
 // display results in feedback section
 const create_feedback_table = function () {
@@ -293,6 +301,7 @@ olEl.addEventListener('click', function (e) {
             e.target.setAttribute('style', 'color:gold; font-size: 600;')
             e.target.textContent = "correct"
             user_score[cnt] = 1;
+            correct.play(); // play correct wav file 
             score++;
 
         } else {
@@ -301,6 +310,7 @@ olEl.addEventListener('click', function (e) {
             user_score[cnt] = 0;
             // incorrect answers will penalize your score/time by ten seconds
             timeCnt -= 10;
+            incorrect.play() // play incorrect wave file 
         }
 
         //  get next quiz
