@@ -72,4 +72,5 @@ const clearScore = function () {
     );
 }
 
+// start the function 
 clearScore()
