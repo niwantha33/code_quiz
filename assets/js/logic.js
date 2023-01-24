@@ -29,13 +29,6 @@ for (let i = 0; i < 4; i++) {
     btn_array[i] = document.createElement('button');
 }
 
-
-export  function func_score(){
-
-    return Object.create(score);
-}
-
-
 const create_feedback_table = function () {
     console.log("create table")
     document.querySelector('#end-screen').setAttribute('class', 'hide')
