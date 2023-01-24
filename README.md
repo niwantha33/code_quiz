@@ -1,6 +1,9 @@
 # code_quiz
 
 ## description 
+This project is to create a quiz game. The code imports a function called "get_questions" from a separate file "questions.js" to get quiz and global variables.It also selects several HTML elements on the page such as the timer, question title, and quiz choices, and creates elements for displaying the quiz questions and feedback. 
+
+The code also includes an event listener for when the quiz ends, which calls the "create_feedback_table" function and displays the results of the quiz in a table. It also includes "set_feedback" function which will redirect user to highscores page after 5 sec.
 
 
 ### credits
