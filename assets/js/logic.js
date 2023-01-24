@@ -3,32 +3,36 @@ import { get_questions } from "../js/questions.js";
 // global variables 
 let score = 0;
 
-let timeCnt = 150
-let cnt = 0;
-let set_time_id = undefined
-let numOfQuiz = get_questions().size;
+let timeCnt = 150 // total seconds for all quiz
+let cnt = 0; // object counts 
+let set_time_id = undefined; // setimer function id 
+
+let numOfQuiz = get_questions().size; // number of objects 
 
 const timer = document.querySelector("#time");
 let title = document.querySelector("#question-title");
 let choices = document.querySelector("#choices");
 
-let olEl = document.createElement('ol');
+let olEl = document.createElement('ol'); // display multiple ans
+
 // create a table for feedback 
 let tableEl = document.createElement('table');
 
 const qn_show = document.querySelector("#questions");
 
-let btn_array = new Array(4)
+let btn_array = new Array(4) // quiz buttons 
 
-let user_score = new Array(10);
+let user_score = new Array(10); // in order to display results in feedback section 
 
 
-// create 4 buttons 
+// create 4 multiple ans buttons 
 for (let i = 0; i < 4; i++) {
 
     btn_array[i] = document.createElement('button');
 }
 
+
+// display results in feedback section
 const create_feedback_table = function () {
     console.log("create table")
     document.querySelector('#end-screen').setAttribute('class', 'hide')
@@ -47,7 +51,7 @@ const create_feedback_table = function () {
     td_sr.textContent = 'Sr.No';
     tr.appendChild(td_sr);
     let td_quiz = document.createElement('td');
-    td_quiz.textContent ="Quiz";
+    td_quiz.textContent = "Quiz";
     // td_quiz.setAttribute('style', 'width:auto; ')
     tr.appendChild(td_quiz);
 
@@ -62,11 +66,11 @@ const create_feedback_table = function () {
     // tr.setAttribute('style', 'width:100%;')
     tableEl.appendChild(tr);
 
-    
+
     user_score.forEach((value, key) => {
         const tr = document.createElement('tr');
         let td = document.createElement('td');
-        td.textContent = key+1;
+        td.textContent = key + 1;
         tr.appendChild(td)
 
         let td_col_1 = document.createElement('td');
@@ -80,19 +84,19 @@ const create_feedback_table = function () {
         tr.appendChild(td_col_2)
 
         let td_col_3 = document.createElement('td');
-        td_col_3.textContent = value?"Correct":"Incorrect";
+        td_col_3.textContent = value ? "Correct" : "Incorrect";
         tr.appendChild(td_col_3)
         // tr.setAttribute('style', 'width:100%;')
         tableEl.appendChild(tr);
     });
-    
+
     set_feedback.appendChild(tableEl);
 
     setTimeout('window.location.href = "./highscores.html"', 2000);
 }
 
 const set_feedback = function (newScore, oldScore) {
-    
+
     create_feedback_table();
 
 
@@ -108,20 +112,22 @@ const store_score = function () {
 
         let new_score = '';
 
-        let get_score = localStorage.getItem('score');
-        let old_score = JSON.parse(get_score);
-
+        if (localStorage.hasOwnProperty('score')) {
+            let get_score = localStorage.getItem('score');
+            let old_score = JSON.parse(get_score);
+        } else {
+            get_score = null;
+        }
         let get_initials = document.getElementById('initials').value;
-        console.log(score, get_initials)
 
-        let timestamp = new Date().toJSON().split('T')
+        // console.log(score, get_initials)
 
-        
+        let timestamp = new Date().toJSON().split('T');
+
+        new_score = JSON.stringify({ timestamp: `${timestamp[0]} ${timestamp[1].slice(0, 8)}`, name: get_initials, quiz_score: score });
 
         if (get_score !== null) {
             
-            new_score = JSON.stringify({ timestamp: `${timestamp[0]} ${timestamp[1].slice(0, 8)}`, name: get_initials, quiz_score: score });
-
             if (Number(old_score.quiz_score) < score && old_score.name === get_initials) {
 
                 localStorage.setItem('score', new_score);
@@ -135,7 +141,6 @@ const store_score = function () {
         set_feedback(new_score, old_score);
 
     }, true)
-
 
 }
 
