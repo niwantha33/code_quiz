@@ -9,7 +9,7 @@ some of the issues that I found during the coding;
 
 - found additional null element in the Array while using forEach loop 
 
-![debug]("../assets/images/debug.png")
+![debug](./assets/images/debug.png)
 
 ### credits
 [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
