@@ -111,12 +111,14 @@ const store_score = function () {
         e.stopPropagation();
 
         let new_score = '';
+        let get_score = undefined;
+        let old_score = {};
 
         if (localStorage.hasOwnProperty('score')) {
-            let get_score = localStorage.getItem('score');
-            let old_score = JSON.parse(get_score);
+            get_score = localStorage.getItem('score');
+            old_score = JSON.parse(get_score);
         } else {
-            get_score = null;
+            get_score == undefined;
         }
         let get_initials = document.getElementById('initials').value;
 
@@ -126,7 +128,7 @@ const store_score = function () {
 
         new_score = JSON.stringify({ timestamp: `${timestamp[0]} ${timestamp[1].slice(0, 8)}`, name: get_initials, quiz_score: score });
 
-        if (get_score !== null) {
+        if (get_score !== null && get_score !== undefined) {
             
             if (Number(old_score.quiz_score) < score && old_score.name === get_initials) {
 
