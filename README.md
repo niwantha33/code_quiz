@@ -5,6 +5,11 @@ This project is to create a quiz game. The code imports a function called "get_q
 
 The code also includes an event listener for when the quiz ends, which calls the "create_feedback_table" function and displays the results of the quiz in a table. It also includes "set_feedback" function which will redirect user to highscores page after 5 sec.
 
+some of the issues that I found during the coding;
+
+- found additional null element in the Array while using forEach loop 
+
+![debug]("../assets/images/debug.png")
 
 ### credits
 [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
