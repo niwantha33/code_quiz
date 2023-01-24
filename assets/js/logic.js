@@ -92,10 +92,10 @@ const create_feedback_table = function () {
 
     set_feedback.appendChild(tableEl);
 
-    setTimeout('window.location.href = "./highscores.html"', 2000);
+    setTimeout('window.location.href = "./highscores.html"', 5000);
 }
 
-const set_feedback = function (newScore, oldScore) {
+const set_feedback = function () {
 
     create_feedback_table();
 
@@ -104,43 +104,41 @@ const set_feedback = function (newScore, oldScore) {
 
 
 const store_score = function () {
-
+    
     let submit_btn = document.getElementById('submit');
 
     submit_btn.addEventListener('click', function (e) {
+
         e.stopPropagation();
 
-        let new_score = '';
-        let get_score = undefined;
-        let old_score = {};
-
-        if (localStorage.hasOwnProperty('score')) {
-            get_score = localStorage.getItem('score');
-            old_score = JSON.parse(get_score);
-        } else {
-            get_score == undefined;
-        }
         let get_initials = document.getElementById('initials').value;
 
-        // console.log(score, get_initials)
+        let score_obj = new Array();       
 
-        let timestamp = new Date().toJSON().split('T');
+        if (localStorage.hasOwnProperty('score')) {
 
-        new_score = JSON.stringify({ timestamp: `${timestamp[0]} ${timestamp[1].slice(0, 8)}`, name: get_initials, quiz_score: score });
+            let old_data = JSON.parse(localStorage.score);
 
-        if (get_score !== null && get_score !== undefined) {
-            
-            if (Number(old_score.quiz_score) < score && old_score.name === get_initials) {
+            console.log(old_data)
 
-                localStorage.setItem('score', new_score);
+            old_data.forEach((value, index)=>{
 
-            }
+                console.log(value, index)
 
-        } else {
-            localStorage.setItem('score', new_score);
+                score_obj.push(value);  
+
+                        
+
+            })           
         }
-
-        set_feedback(new_score, old_score);
+        
+        let timestamp = new Date().toJSON().split('T');
+        let score_new_obj = { timestamp: `${timestamp[0]} ${timestamp[1].slice(0, 8)}`, name: get_initials, quiz_score: score }
+        score_obj.push(score_new_obj);
+        let new_record = JSON.stringify(score_obj);
+        localStorage.setItem('score', new_record);
+  
+        set_feedback();
 
     }, true)
 

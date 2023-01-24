@@ -3,6 +3,7 @@ const clearScore = function () {
 
 
     let show_score = document.getElementById('highscores');
+    let scoreLiEl = document.createElement('li');
 
     // console.log(show_score)
 
@@ -10,14 +11,37 @@ const clearScore = function () {
         console.log('check')
         try {
 
-            let {score_store, n} = localStorage.getItem('score');
+            let score_store = localStorage.getItem('score');
 
-            console.log(score_store,n)
+            // console.log(score_store,n)
 
             if (score_store !== null) {
+                console.log(score_store)
+
+                while (show_score.hasChildNodes()) {
+
+                    show_score.removeChild(show_score.children[0]);
+                }
+
+                console.log(score_store)
+
+                let score_json = JSON.parse(score_store);
+
+                console.log(score_json)
+
+                for (let i = 0; i < Object.keys(score_json).length; i++) {
+                    i = document.createElement('li')
+
+                    let txt = "Date :" + score_json.timestamp + "        ::" + " Name: " + score_json.name + "        :::" + " Score: " + score_json.quiz_score;
+
+                    console.log(txt)
+
+                    i.textContent = txt;
+
+                    show_score.appendChild(i)
 
 
-                show_score.textContent = JSON.parse(score_store).timestamp + " " + JSON.parse(score_store).name + " " + JSON.parse(score_store).quiz_score;
+                }
 
             }
 
