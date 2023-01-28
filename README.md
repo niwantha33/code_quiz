@@ -15,6 +15,18 @@ some of the issues that I found during the coding;
 
 ![solved](./assets/images/array_issues.png)
 
+---
+I understood that we do not use () => function format to call object method. 
+```javascript
+
+    const qn  = {
+        qz:"xxxx",
+        choices: ['a','b','c','d'],
+        ans: () => this.choices[2]
+    }
+
+```
+
 ### credits
 [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
